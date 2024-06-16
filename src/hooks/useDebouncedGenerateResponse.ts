@@ -15,7 +15,7 @@ const processCompletion = (input: string, completion: string) => {
 const useDebouncedGenerateResponse = (initialText = '') => {
   const [text, setText] = useState(initialText);
   const [suggestion, setSuggestion] = useState('');
-  const engine = useMLCEngine();
+  const { engine, progress } = useMLCEngine();
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const generateResponse = async (input: string, signal: AbortSignal) => {
@@ -66,6 +66,7 @@ const useDebouncedGenerateResponse = (initialText = '') => {
     suggestion,
     clearSuggestion: () => setSuggestion(''),
     setModelInputText: setText,
+    progress
   };
 };
 

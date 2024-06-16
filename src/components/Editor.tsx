@@ -4,13 +4,14 @@ import 'react-quill/dist/quill.snow.css';
 import './Editor.scss';
 import useDebouncedGenerateResponse from '../hooks/useDebouncedGenerateResponse';
 import _ from 'lodash';
+import WelcomModal from './WelcomModal';
 
 const Editor = () => {
     const [text, setText] = useState('');
     const quillRef = useRef<any>(null);
 
     // Custom hook to manage suggestions and input text
-    const { suggestion, setModelInputText, clearSuggestion } = useDebouncedGenerateResponse();
+    const { suggestion, setModelInputText, clearSuggestion, progress } = useDebouncedGenerateResponse();
     const debouncedSetModelInputText = useMemo(
         () => _.debounce(setModelInputText, 1500),
         [setModelInputText]
@@ -94,6 +95,9 @@ const Editor = () => {
     }, []);
 
     return (
+        <>
+        <WelcomModal progress={progress} />
+
         <ReactQuill
             ref={quillRef}
             theme="snow"
@@ -109,6 +113,7 @@ const Editor = () => {
                 }
             }}
         />
+        </>
     );
 };
 

@@ -1,3 +1,5 @@
+import { ChatOptions } from "@mlc-ai/web-llm";
+
 export const chatConfig = {
     "version": "0.1.0",
     "model_type": "qwen2",
@@ -78,5 +80,5 @@ export const chatConfig = {
       151645,
       151643
     ]
-  }
+  } as unknown as ChatOptions;
   
