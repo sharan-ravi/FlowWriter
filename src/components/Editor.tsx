@@ -17,6 +17,12 @@ const Editor = () => {
         [setModelInputText]
     );
 
+    useEffect(() => {
+        if (quillRef.current) {
+            quillRef.current.focus(); // Focus the editor using the ref
+        }
+    }, [progress]);
+
     // Effect for handling suggestions
     useEffect(() => {
         if (quillRef.current && suggestion) {

@@ -40,13 +40,19 @@ export default function WelcomeModal({
                     </p>
 
 
-                    <div className="flex flex-col space-y-2">
+                    {progress !== 1 && <div className="flex flex-col space-y-2">
                         <p>
-                            <strong>The AI model is currently downloading.</strong> This is a one-time process that may take a few minutes. <strong>Future runs will load the model directly from your browser cache</strong>, speeding up the process.
+                            <strong>The AI model is currently downloading <span className="loading loading-ball loading-xs text-error"></span></strong>  This is a one-time process that may take a few minutes. <strong>Future runs will load the model directly from your browser cache</strong>, speeding up the process.
                         </p>
 
                         <ProgressBar completed={Math.round(progress * 100)} />
-                    </div>
+                    </div>}
+
+                    {progress === 1 && <div className="flex flex-col space-y-2">
+                        <p>
+                            <strong>The AI model is now ready to use.</strong> You can start writing now! Click the <strong>Start writing!</strong> button to begin.
+                        </p>
+                    </div>}
 
                     <p>
                         Made by <button className='btn btn-link px-0' onClick={() => {
