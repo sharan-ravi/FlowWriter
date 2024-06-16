@@ -1,6 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { useMLCEngine } from './useMLCEngine';
 
+const processCompletion = (input: string, completion: string) => {
+    // Check if the completion starts with the input
+    if (completion.startsWith(input)) {
+        // Remove the input part from the completion
+        return completion.slice(input.length);
+    }
+    // If the completion does not start with the input, return it as is
+    return completion;
+}
+
+
 const useDebouncedGenerateResponse = (initialText = '') => {
   const [text, setText] = useState(initialText);
   const [suggestion, setSuggestion] = useState('');
@@ -10,7 +21,7 @@ const useDebouncedGenerateResponse = (initialText = '') => {
   const generateResponse = async (input: string, signal: AbortSignal) => {
     if (engine) {
       const messages = [
-        { role: "system", content: "Utilize your expertise in writing to generate exactly five words that follow the given input, ensuring they are a direct continuation of the provided text. Do not repeat any part of the input in your response. Include appropriate spacing and punctuation as necessary to maintain grammatical integrity." },
+        { role: "system", content: "Complete the following text with a maximum of five words that follow the given input." },
         { role: "user", content: input },
       ];
 
@@ -19,7 +30,7 @@ const useDebouncedGenerateResponse = (initialText = '') => {
         
         // Update suggestion if the request was not aborted
         if (!signal.aborted) {
-          setSuggestion(reply.choices[0].message.content);
+          setSuggestion(processCompletion(input, reply.choices[0].message.content));
         }
       } catch (error) {
         if (error.name !== 'AbortError') {

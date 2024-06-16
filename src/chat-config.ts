@@ -44,13 +44,13 @@ export const chatConfig = {
     },
     "conv_template": {
       "name": "chatml",
-      "system_template": "<|im_start|>system\n{system_message}<|im_end|>\n",
-      "system_message": "An AI assistant, that completes the given input.\n",
+      "system_template": "system\n{system_message}\n",
+      "system_message": "A conversation between a user and an LLM-based AI assistant. The assistant gives helpful and honest answers.",
       "system_prefix_token_ids": null,
       "add_role_after_system_message": true,
       "roles": {
-        "user": "<|im_start|>user",
-        "assistant": "<|im_start|>assistant"
+        "user": "user",
+        "assistant": "assistant"
       },
       "role_templates": {
         "user": "{user_message}",
@@ -59,18 +59,18 @@ export const chatConfig = {
       },
       "messages": [],
       "seps": [
-        "<|im_end|>\n"
+        "\n"
       ],
       "role_content_sep": "\n",
       "role_empty_sep": "\n",
       "stop_str": [
-        "<|im_end|>"
+        ""
       ],
       "stop_token_ids": [
         2
       ],
-      "function_string": "",
-      "use_function_calling": false
+      "function_string": "function continuation(text) {\n  return model.generate(text, {complete: true});\n}",
+      "use_function_calling": true
     },
     "pad_token_id": 151643,
     "bos_token_id": 151643,

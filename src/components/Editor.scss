@@ -33,3 +33,11 @@
 .ql-toolbar {
   border: none !important;
 }
+
+.ql-toolbar {
+  .ql-formats {
+    &:nth-of-type(2), &:nth-of-type(3) {
+      display: none;
+    }
+  }
+}

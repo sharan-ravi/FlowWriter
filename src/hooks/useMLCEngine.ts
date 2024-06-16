@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CreateMLCEngine, InitProgressReport, MLCEngine } from '@mlc-ai/web-llm';
+import { chatConfig } from '../utils';
 
 const initializeAndGetEngine = async () => {
   const newEngine = await CreateMLCEngine(
@@ -8,7 +9,8 @@ const initializeAndGetEngine = async () => {
       initProgressCallback: (report: InitProgressReport) => {
         console.log("Loading model:", report);
       }
-    }
+    },
+    chatConfig
   );
 
   return newEngine;
