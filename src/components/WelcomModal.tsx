@@ -31,10 +31,14 @@ export default function WelcomeModal({
 
                     <h3 className="font-bold text-lg">Welcome to FlowWriter!</h3>
 
-                    <p className="text-lg text-gray-300 leading-loose">
-                    <span className="font-bold bg-purple-800 px-2 py-1 rounded">FlowWriter</span> 📝 is a minimal writing tool that is powered by <span className="italic bg-blue-800 px-2 py-1 rounded">an on-device AI</span> to help you stay in <span className="font-bold bg-green-800 px-2 py-1 rounded">flow</span> while writing. This tool features an <span className="font-bold bg-red-800 px-2 py-1 rounded">on-device AI model</span>, guaranteeing that your data <span className="font-bold bg-blue-800 px-2 py-1 rounded">never leaves your machine</span>. 🛡️ Built for the <span className="font-bold bg-gray-800 px-2 py-1 rounded">Peerlist Hackathon.</span>
-
+                    <p className="text-md text-gray-300 leading-loose">
+                        <span className="font-bold bg-purple-800 px-2 py-1 rounded">FlowWriter</span> 📝 is a minimal writing assistant that is powered by <span className="italic bg-blue-800 px-2 py-1 rounded">an on-device LLM</span> to help you stay in <span className="font-bold bg-green-800 px-2 py-1 rounded">flow</span> while writing, by giving you suggestions whenever you're stuck.
                     </p>
+
+                    <p className="text-md text-gray-300 leading-loose">
+                        Please note that <span className="font-bold bg-purple-800 px-2 py-1 rounded">FlowWriter</span> works only on the <span className="font-bold bg-blue-800 px-2 py-1 rounded">latest version of Chrome</span> and requires a <span className="font-bold bg-green-800 px-2 py-1 rounded">minimum of 8GB of RAM</span> for optimal performance.
+                    </p>
+
 
                     <div className="flex flex-col space-y-2">
                         <p>
@@ -44,9 +48,10 @@ export default function WelcomeModal({
                         <ProgressBar completed={Math.round(progress * 100)} />
                     </div>
 
-
                     <p>
-                        Made by Sharan, with ❤️ for <img src={PeerlistLogo} className="bg-white p-1 h-10 ml-1 inline" alt="Peerlist Logo" />
+                        Made by <button className='btn btn-link px-0' onClick={() => {
+                            window.open("https://twitter.com/sharan_indie", "_blank");
+                        }}>Sharan</button>, with ❤️ for <img src={PeerlistLogo} className="bg-white p-1 h-10 ml-1 inline" alt="Peerlist Logo" />
                     </p>
 
                 </div>
