@@ -11,6 +11,19 @@ const processCompletion = (input: string, completion: string) => {
     return completion;
 }
 
+const getLastNWords = (sentence: string, n: number = 20) => {
+    const words = sentence.split(/\s+/);
+    
+    if (words.length <= n) {
+        return words.join(' ');
+    }
+    
+    const lastTwentyWords = words.slice(-n);
+    
+    return lastTwentyWords.join(' ');
+}
+ 
+
 
 const useDebouncedGenerateResponse = (initialText = '') => {
   const [text, setText] = useState(initialText);
@@ -30,7 +43,7 @@ const useDebouncedGenerateResponse = (initialText = '') => {
         
         // Update suggestion if the request was not aborted
         if (!signal.aborted) {
-          setSuggestion(processCompletion(input, reply.choices[0].message.content));
+          setSuggestion(processCompletion(getLastNWords(input), reply.choices[0].message.content));
         }
       } catch (error) {
         if (error.name !== 'AbortError') {
