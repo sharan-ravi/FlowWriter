@@ -1,30 +1,54 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# FlowWriter
 
-Currently, two official plugins are available:
+Welcome to FlowWriter, your on-device AI-powered writing assistant designed to enhance your writing experience by providing real-time text completions. With FlowWriter, staying in the creative flow is easier than ever, thanks to our privacy-first, local processing approach.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **On-Device AI**: Leverages an on-device large language model to ensure your data privacy and security.
+- **Real-Time Suggestions**: Offers intelligent text completions as you type to keep your thoughts flowing without interruption.
+- **Lightweight Design**: Built with React and optimized with TypeScript for robust and scalable performance.
+- **Stylish UI**: Features a sleek, modern interface designed with TailwindCSS for a comfortable and engaging user experience.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Requirements
 
-- Configure the top-level `parserOptions` property like this:
+- Latest version of Chrome
+- Minimum of 8GB of RAM for optimal performance
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Getting Started
+
+### Prerequisites
+
+Before you install FlowWriter, ensure you have Node.js installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sharan-ravi/FlowWriter
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd FlowWriter
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Application
+
+To run FlowWriter on your local machine, execute the following command:
+```bash
+npm run dev
 ```
+This will start the development server and open FlowWriter in your default web browser.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Contributing
+
+Contributions to FlowWriter are always welcome! Whether it's bug fixes, feature enhancements, or improvements to documentation, please feel free to make a pull request.
+
+## License
+
+FlowWriter is released under the MIT License. 
+
