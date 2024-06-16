@@ -1,0 +1,35 @@
+.ql-editor {
+  color: white;
+}
+
+.ql-container {
+  height: calc(100vh - 100px);
+  width: 80vw;
+  border: none !important;
+}
+
+.ql-header {
+  .ql-picker-label {
+    color: white;
+  }
+
+  .ql-picker-options {
+    color: white;
+  }
+}
+
+.ql-link {
+  display: none !important;
+}
+
+.ql-clean {
+  display: none !important;
+}
+
+.ql-picker-item {
+  color: black;
+}
+
+.ql-toolbar {
+  border: none !important;
+}

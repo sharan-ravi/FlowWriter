@@ -1,43 +1,53 @@
 import { useState, useEffect, useRef } from 'react';
 import { useMLCEngine } from './useMLCEngine';
 
-const useDebouncedGenerateResponse = (initialText = '', delay = 1000) => {
+const useDebouncedGenerateResponse = (initialText = '') => {
   const [text, setText] = useState(initialText);
   const [suggestion, setSuggestion] = useState('');
-  const timeoutRef = useRef<number | null>(null);
   const engine = useMLCEngine();
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const generateResponse = async (input: string) => {
+  const generateResponse = async (input: string, signal: AbortSignal) => {
     if (engine) {
       const messages = [
-        { role: "system", content: "You are an expert in writing. Complete the following text as best you can. Only give the next 5 words in the input text. Add space if needed." },
+        { role: "system", content: "Utilize your expertise in writing to generate exactly five words that follow the given input, ensuring they are a direct continuation of the provided text. Do not repeat any part of the input in your response. Include appropriate spacing and punctuation as necessary to maintain grammatical integrity." },
         { role: "user", content: input },
       ];
 
       try {
-        const reply = await engine.chat.completions.create({ messages });
-        console.log(reply.choices[0].message);
-        console.log(reply.usage);
-
-        setSuggestion(reply.choices[0].message.content);
+        const reply = await engine.chat.completions.create({ messages, signal });
+        
+        // Update suggestion if the request was not aborted
+        if (!signal.aborted) {
+          setSuggestion(reply.choices[0].message.content);
+        }
       } catch (error) {
-        console.error('Request failed:', error);
+        if (error.name !== 'AbortError') {
+          console.error('Request failed:', error);
+        }
       }
     }
   };
 
   useEffect(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
     }
 
     if (text) {
-        timeoutRef.current = setTimeout(() => {
-          generateResponse(text);
-        }, delay);
-      } else {
-        setSuggestion('');
+      const abortController = new AbortController();
+      abortControllerRef.current = abortController;
+
+      generateResponse(text, abortController.signal);
+    } else {
+      setSuggestion('');
+    }
+
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
       }
+    };
   }, [text]);
 
   return {
