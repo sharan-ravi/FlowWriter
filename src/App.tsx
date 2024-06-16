@@ -1,51 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
-import { CreateMLCEngine, InitProgressReport, MLCEngine } from '@mlc-ai/web-llm';
-import { initializeAndGetEngine } from './utils/ai-utils';
-import { useMLCEngine } from './hooks/useMLCEngine';
+import { useRef, useEffect, useState } from 'react';
+import useDebouncedGenerateResponse from './hooks/useDebouncedGenerateResponse';
 
 function App() {
-  const [text, setText] = useState('');
-  const [suggestion, setSuggestion] = useState('');
   const hiddenInputRef = useRef<HTMLInputElement>(null);
   const displayDivRef = useRef<HTMLDivElement>(null);
+  const [text, setText] = useState('');
 
-  const engine = useMLCEngine();
-
-  const generateResponse = async (input: string) => {
-    if (engine) {
-      const messages = [
-        { role: "system", content: "You are an expert in writing. Complete the following text as best you can. Only give the next 5 words in the input text." },
-        { role: "user", content: input },
-      ];
-
-      try {
-        const reply = await engine.chat.completions.create({ messages });
-        console.log(reply.choices[0].message);
-        console.log(reply.usage);
-
-        setSuggestion(reply.choices[0].message.content);
-      } catch (error) {
-        console.error('Request failed:', error);
-      }
-    }
-  };
+  const { suggestion, setModelInputText, clearSuggestion } = useDebouncedGenerateResponse();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const textContent = event.target.value;
-    setText(textContent);
-    if (textContent) {
-      generateResponse(textContent);
-    } else {
-      setSuggestion('');
-    }
+    setText(event.target.value);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Tab" && suggestion !== "") {
       event.preventDefault();
       const newText = text + suggestion;
+      clearSuggestion();
       setText(newText);
-      setSuggestion('');
       if (hiddenInputRef.current) {
         hiddenInputRef.current.value = newText;
       }
@@ -56,6 +28,8 @@ function App() {
     if (hiddenInputRef.current) {
       hiddenInputRef.current.focus();
     }
+
+    setModelInputText(text);
   }, [text]);
 
   return (
